@@ -1,0 +1,10 @@
+# Kubernetes run 3 replica from pod(3container)
+## with 2 services
+### in one claster
+#### with load-balance 
+
+run:
+kubectl apply -f multi-container-deployment-with-services.yaml
+
+delete:
+kubectl delete -f multi-container-deployment-with-services.yaml
