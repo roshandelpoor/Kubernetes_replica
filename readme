@@ -10,10 +10,14 @@ delete:
 kubectl delete -f multi-container-deployment-with-services.yaml
 
 // new
-kubectl apply -f laravel-nginx-redis-postgres.yaml
-kubectl delete -f laravel-nginx-redis-postgres.yaml
-open browser: http://127.0.0.1:8084
-k6 stress test job result: kubectl logs job/k6-stress-test -f
+- kubectl apply -f laravel-nginx-redis-postgres.yaml
+- kubectl delete -f laravel-nginx-redis-postgres.yaml
+- open browser: http://127.0.0.1:8084
+- k6 stress test job result: kubectl logs job/k6-stress-test -f
+OR
+To retarget without editing YAML:
+- kubectl delete job k6-stress-test --ignore-not-found
+- kubectl create job k6-stress-test --image=grafana/k6:latest -- run -e TARGET_URL=http://nginx-service:8084/ - <(Get-Content .\\k6\\stress-test.js -Raw)
 
 ---
 THRESHOLDS
