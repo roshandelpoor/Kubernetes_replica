@@ -10,4 +10,44 @@ delete:
 kubectl delete -f multi-container-deployment-with-services.yaml
 
 // new
-kubectl apply -f multi-container-deployment-with-services_seperate_redis.yaml
+kubectl apply -f laravel-nginx-redis-postgres.yaml
+kubectl delete -f laravel-nginx-redis-postgres.yaml
+open browser: http://127.0.0.1:8084
+k6 stress test job result: kubectl logs job/k6-stress-test -f
+
+---
+THRESHOLDS
+
+    http_req_duration
+    ✓ 'p(95)<500' p(95)=2.46ms
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.00%
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......: 4525    39.684127/s
+    checks_succeeded...: 100.00% 4525 out of 4525
+    checks_failed......: 0.00%   0 out of 4525
+
+    ✓ status is 200
+
+    HTTP
+    http_req_duration..............: avg=2.05ms min=169.18µs med=1.99ms max=12.97ms p(90)=2.31ms p(95)=2.46ms
+      { expected_response:true }...: avg=2.05ms min=169.18µs med=1.99ms max=12.97ms p(90)=2.31ms p(95)=2.46ms
+    http_req_failed................: 0.00%  0 out of 4525
+    http_reqs......................: 4525   39.684127/s
+
+    EXECUTION
+    iteration_duration.............: avg=1s     min=1s       med=1s     max=1.01s   p(90)=1s     p(95)=1s
+    iterations.....................: 4525   39.684127/s
+    vus............................: 2      min=2         max=50
+    vus_max........................: 50     min=50        max=50
+
+    NETWORK
+    data_received..................: 941 kB 8.3 kB/s
+    data_sent......................: 335 kB 2.9 kB/s
+
+running (1m54.0s), 00/50 VUs, 4525 complete and 0 interrupted iterations
+default ✓ [ 100% ] 00/50 VUs  2m0s
